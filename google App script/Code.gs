@@ -6,7 +6,7 @@ function doGet() {
 function writeData(timeStamp,n,s,number,datanumber)
 {
   let ss = SpreadsheetApp.getActiveSpreadsheet()
-  let sheet = ss.getSheetByName('現在位置');
+  let sheet = ss.getSheetByName('現在位置');//''の中身を現在位置のみを表示させるシート名に変更
   let numberList = [[number,datanumber,timeStamp,n,s]];
   
   if(number <=9)
