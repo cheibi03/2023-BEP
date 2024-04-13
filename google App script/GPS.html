@@ -1,1 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+        <script>
+        var n = null;
+        var s = null;
+        var time = null;
+        var dataNumber = 0;
+        var number = 0;
+        var ID;
+        var wifiTypes;
+        var downlink;
 
+        function gPS()
+          {
+            ID = navigator.geolocation.watchPosition(getGPS,error);
+          }
+
+        function getGPS(position)
+          {
+            n = position.coords.latitude;
+            s = position.coords.longitude;
+            time = position.timestamp;
+            var date = new Date(time);
+
+            date = date.toString();
+            dataNumber = dataNumber + 1;
+            document.getElementById('targetN').textContent = "緯度:"+n;
+            document.getElementById('targetS').textContent = "経度:"+s;
+            document.getElementById('time').textContent = "時間:" + date;
+            document.getElementById('dataNumber').textContent = "取得回数:" + dataNumber;
+            number = document.getElementById('number').value;
+            
+            google.script.run.writeData(date,n,s,Number(number),dataNumber);
+          }
+
+        function gpsStop()
+          {
+		        navigator.geolocation.clearWatch(ID);
+          }
+    </script>
+  </head>
+  <body>
+    <h3>Get GPS app</h3>
+    <p id='targetN'></p>
+    <p id='targetS'></p>
+    <p id='time'></p>
+    <p id='dataNumber'></p>
+    <input type="button" value="Start" onclick="gPS();"/>
+    <input type="button" value="Stop" onclick="gpsStop();"/>
+    <input type="number" value="観測機器の番号" id="number"/>
+  </body>
+</html>
